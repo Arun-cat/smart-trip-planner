@@ -1,0 +1,21 @@
+/* dashboard.css */
+
+h1 {
+  color: #007bff;
+  text-align: center;
+}
+
+/* Adjust vertical spacing */
+.flex-grow-1 {
+  margin-top: 60px; /* Adjust this value as needed for spacing */
+}
+
+form {
+  max-width: 600px;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}

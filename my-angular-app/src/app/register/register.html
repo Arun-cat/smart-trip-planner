@@ -1,0 +1,55 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
+        <h3 class="text-center mb-4">Register</h3>
+        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="name"
+                    #nameInput="ngModel" />
+                <div *ngIf="nameInput.invalid && nameInput.touched" class="text-danger small">
+                    Name is required.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" id="email" name="email" class="form-control" required [(ngModel)]="email"
+                    #emailInput="ngModel" email />
+                <div *ngIf="emailInput.invalid && emailInput.touched" class="text-danger small">
+                    Please enter a valid email.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required minlength="6"
+                    [(ngModel)]="password" #passwordInput="ngModel" />
+                <div *ngIf="passwordInput.invalid && passwordInput.touched" class="text-danger small">
+                    Password must be at least 6 characters.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required
+                    [(ngModel)]="confirmPassword" #confirmPasswordInput="ngModel" />
+                <div *ngIf="(confirmPasswordInput.touched || registerForm.submitted) && password !== confirmPassword"
+                    class="text-danger small">
+                    Passwords do not match.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="
+          registerForm.invalid || password !== confirmPassword
+        ">
+                Register
+            </button>
+            <p class="text-center mt-3">
+                Already have an account?
+                <a routerLink="/">Login here</a>
+            </p>
+
+        </form>
+    </div>
+</div>
