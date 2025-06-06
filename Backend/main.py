@@ -107,15 +107,34 @@ def delete_user(user_id: int, email: str, password: str, db: Session = Depends(g
     db.commit()
     return {"message": f"User with id {user_id} deleted successfully."}
 
+import json
+
+import json
+
 @app.post("/generate")
 async def generate_answer(request: PromptRequest):
     try:
-        # response = gpt4all_model.generate("Hello, world!", max_tokens=10)
-        # print(response)
-        response = gpt4all_model.generate(request.prompt, max_tokens=100)
-        return {"answer": response}
+        response = gpt4all_model.generate(request.prompt, max_tokens=300)
+        print(response)  # still helpful for debugging
+
+        # Extract the JSON substring
+        start_index = response.find('[')
+        end_index = response.rfind(']') + 1  # include the closing ]
+        json_substring = response[start_index:end_index]
+
+        # Parse the JSON substring
+        parsed_response = json.loads(json_substring)
+
+        # Return it
+        return {"answer": parsed_response}
+
+    except json.JSONDecodeError as e:
+        raise HTTPException(status_code=500, detail=f"Failed to parse GPT4All response: {str(e)}")
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"GPT4All error: {str(e)}")
+
+
 
 # @app.post("/admin/login")
 # def admin_login(admin: AdminLoginRequest):
